@@ -4,17 +4,12 @@ import "./atm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Row, Col, Input } from "reactstrap";
 
-function Receipt({ moneyArr, moneyAtm }) {
+function Receipt({ moneyArr, onSubmit }) {
   const [money1, setMoney1] = useState([]);
   // console.log(money1);
-  
-  function sumMoneyReturn(x) {
-    const sumReturn = moneyAtm + x;
-    // <Atm sumReturn={sumReturn}/>
-  }
+
 
   function del(data) {
-    sumMoneyReturn(data.moneyResult);
 
     // const updateMoneyArr = moneyArr.map((mnArr) => {
 
@@ -23,7 +18,6 @@ function Receipt({ moneyArr, moneyAtm }) {
     //   }
     // });
     // setMoney1(updateMoneyArr);
-
     console.log(data);
   }
 
@@ -44,9 +38,11 @@ function Receipt({ moneyArr, moneyAtm }) {
           <Button
             className="button-del"
             onClick={() => {
-              del(moneyArr[index]);
+              onSubmit(moneyArr[index], index)
+              // del(moneyArr[index]);
               // console.log(moneyArr[index]);
-            }}
+            }
+            }
           >
             คืนเงิน
           </Button>

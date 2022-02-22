@@ -5,6 +5,42 @@ import { Button, Row, Col, Input } from "reactstrap";
 import Receipt from "./receipt";
 
 function Atm() {
+
+  const onSubmit = (data, index) => {
+    console.log(data.moneyList, index);
+    console.log(money[0].label);
+    const up = money.map((m) => {
+      // console.log(m)
+      const result = data.moneyList.find((d) => d.label === m.label);
+
+      if (result) {
+        // console.log(m.amount);
+        // console.log(result.amount);
+
+        const a = {
+          id: m.id,
+          label: m.label,
+          amount: result.amount + m.amount,
+          unit: m.unit,
+        };
+        return a;
+      } else {
+        return m;
+      }
+    })
+    setMoney(up);
+
+    // setMoneyArr(moneyArr.filter(item => item[index] !== data[index]));
+    // ลบ
+    moneyArr.splice(index, 1);
+
+    // moneyArr.map((item) => {
+    //   if(item !== data[index]){
+    //     return setMoneyArr(moneyArr);
+    //   }
+    // });
+  }
+
   const [moneyArr, setMoneyArr] = useState([
     // {
     //   moneyList: "abc",
@@ -12,7 +48,6 @@ function Atm() {
     // },
   ]);
 
-  // const [moneyArr,setMoneyArr] = useState([]);
   const [money, setMoney] = useState([
     {
       id: 1,
@@ -484,8 +519,7 @@ function Atm() {
         <Col xs="12">
           <Receipt
             moneyArr={moneyArr}
-            money={result}
-            moneyAtm={sumArrayReduce}
+            onSubmit={onSubmit}
           />
           {/* <table>
             <tr>{moneyArr[0] && <div>{receipt}</div>}</tr>
